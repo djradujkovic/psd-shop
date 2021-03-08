@@ -42,7 +42,7 @@
                             <div class="popular-img">
                                 <img src="{{ url_for('static', filename = 'proizvodi/' + item.name + '.png')}}" alt="">
                                 <div class="img-cap">
-                                    <span>Add to cart</span>
+                                    <span><a href ='korpaadd/{{item.ID}}'>Add to cart</a></span>
                                 </div>
                                 <div class="favorit-items">
                                     <span class="flaticon-heart"></span>

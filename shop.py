@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 import os
 
 market = Blueprint('market', __name__)
@@ -61,3 +61,18 @@ def item_show(itemid):
 def shop_edit():
     items = Table('shop').load_items()
     return render_template('editshop.html', items = items)
+
+@market.route('/korpa')
+def korpa_show():
+    user = Table('users').item_by_id(session['ID'])
+    items = Table('korpe').find_items({'userid': user.ID, 'shopid': user.shopid})
+    shop = Table('shop')
+    total = sum(shop.item_by_id(i.itemid).price*i.ammount for i in items)
+    return render_template('cart.html', items = items, shop = shop, total = total)
+
+@market.route('/korpaadd/<int:itemid>')
+def korpa_add(itemid):
+    user = Table('users').item_by_id(session['ID'])
+    korpe = Table('korpe')
+    korpe.add_item({'shopid': user.shopid, 'userid': user.ID, 'itemid': itemid, 'ammount': 1})
+    return redirect(url_for('market.shop_show'))
