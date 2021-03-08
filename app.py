@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -12,15 +12,12 @@ app.config['MY_SECRET'] = 'blabla'
 
 mysql = MySQL(app)
 
-@app.route('/')
-def index():
-    from database import Table
-    shop = Table('shop')
-    shop.add_item({'ID': 1, 'name': 'Majica', 'price': 152, 'ammount': 100})
-    shop.add_item({'ID': 2, 'name': 'Majica', 'price': 152, 'ammount': 100})
-    # shop.item_by_id(2).remove()
-    # shop.create_table()
-    return str(shop.find_items(where={'name': 'Majica'}))
+from main import main
+app.register_blueprint(main)
+
+from shop import market
+app.register_blueprint(market)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

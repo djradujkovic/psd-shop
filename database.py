@@ -10,7 +10,6 @@ class Table:
     def add_item(self, item):
         keys = ','.join(item.keys())
         values = tuple(item.values())
-        print(values)
         with Table.mysql.connection.cursor() as mycursor:
             mycursor.execute(f'INSERT INTO {self.name} ({keys}) VALUES {values}')
 
@@ -49,8 +48,6 @@ class Table:
         with Table.mysql.connection.cursor() as mycursor:
             mycursor.execute(f'SHOW COLUMNS FROM {self.name}')
             return (x[0] for x in mycursor)
-    
-
 class Item:
     def __init__(self, table, itemdict):
         self.table = table
