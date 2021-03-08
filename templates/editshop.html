@@ -1,13 +1,30 @@
-<html>
+{% extends 'base.html' %} {% block title %} Edit {% endblock %} {% block body %}
 
-<body>
-    <table>
-        {% for item in items %}
-        <tr>
-            {{ item.name }}
-        </tr>
-        {% endfor %}
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Naziv</th>
+                <th scope="col">Cijena</th>
+                <th scope="col">Količina</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <th scope="row">{{ item.ID }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.ammount }}</td>
+                <td><a class="btn btn-primary" href="/obrisiitem/{{ item.ID }}">Obrisi</a>
+                    <a class="btn btn-primary" href="/edititem/{{ item.ID }}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-</body>
+    <a class="btn btn-primary" href="/dodajproizvod">Dodaj proizvod</a>
+</div>
 
-</html>
+{% endblock %}

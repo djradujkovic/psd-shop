@@ -5,13 +5,14 @@ class Table:
 
     def create_table(self, columns, primary):
         with Table.mysql.connection.cursor() as mycursor:
-            mycursor.execute(f'CREATE TABLE IF NOT EXIST {self.name} ({columns}, PRIMARY KEY({primary}))')
+            mycursor.execute(f'CREATE TABLE {self.name} ({columns}, PRIMARY KEY({primary}))')
 
     def add_item(self, item):
         keys = ','.join(item.keys())
         values = tuple(item.values())
         with Table.mysql.connection.cursor() as mycursor:
             mycursor.execute(f'INSERT INTO {self.name} ({keys}) VALUES {values}')
+        Table.mysql.connection.commit()
 
     def load_items(self):
         with Table.mysql.connection.cursor() as mycursor:
@@ -35,10 +36,17 @@ class Table:
     def update_item(self, item, where):
         with Table.mysql.connection.cursor() as mycursor:
             mycursor.execute(f'UPDATE {self.name} SET {first(item.keys())}  = {first(item.values())} WHERE {whereand(where)}')
+        Table.mysql.connection.commit()
+
+    def update_items(self, items, where):
+        with Table.mysql.connection.cursor() as mycursor:
+            mycursor.execute(f'UPDATE {self.name} SET {moreitems(items)} WHERE {whereand(where)}')
+        Table.mysql.connection.commit()
         
     def remove_item(self, where):
         with Table.mysql.connection.cursor() as mycursor:
             mycursor.execute(f'DELETE FROM {self.name} WHERE {whereand(where)}')
+        Table.mysql.connection.commit()
 
     def convert_item(self, item):
         return dict(zip(self.columns, item))
@@ -58,11 +66,19 @@ class Item:
     def update(self, item):
         self.table.update_item(item = item, where = self.itemdict)
 
+    def updates(self, items):
+        self.table.update_items(items = items, where = self.itemdict)
+
     def remove(self):
         self.table.remove_item(where = self.itemdict)
 
     def __repr__(self):
         return str(self.itemdict)
+
+def moreitems(lista):
+    items = (f'{key} = "{value}"' for key, value in lista.items())
+    string = ','.join(items)
+    return string
 
 def whereand(lista):
     items = (f'{key} = "{value}"' for key, value in lista.items())
