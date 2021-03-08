@@ -5,7 +5,10 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    from database import Table
+    items = Table('shop').load_items()
+    # users = Table('users').create_table(columns='ID int AUTO_INCREMENT, name VARCHAR(24) UNIQUE, password VARCHAR(24)', primary='ID')S
+    return render_template('index.html', items = items)
 
 @main.route('/onama')
 def onama():

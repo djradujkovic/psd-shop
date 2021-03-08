@@ -1,0 +1,14 @@
+.body-bg {
+    background-image: url("/static/pozadina.jpg");
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: contain;
+    background-attachment: fixed;
+}
+
+.item-border {
+    border: blue solid 3px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+}

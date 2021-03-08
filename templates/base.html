@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/flaticon.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/slicknav.css"')}}>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/slicknav.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/animate.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/fontawesome-all.min.css')}}">
@@ -22,8 +22,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/slick.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/nice-select.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-
-    {% block head %}{% endblock %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/new.css')}}"> {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -33,7 +32,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="/static/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -47,7 +46,7 @@
                     <div class="menu-wrapper">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            <a href="index.html"><img src="/static/logo.png" style="height:80px" alt=""></a>
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
@@ -90,11 +89,13 @@
         <!-- Header End -->
     </header>
     <main>
-         {% block body %}{% endblock %}
+        <div class="body-bg">
+            {% block body %}{% endblock %}
+        </div>
     </main>
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area footer-padding">
+        <div class="footer-area footer-bg">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
@@ -106,8 +107,7 @@
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
-                                        <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do
-                                            eiusmod tem.</p>
+                                        <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
                                     </div>
                                 </div>
                             </div>
@@ -158,11 +158,10 @@
                     <div class="col-xl-7 col-lg-8 col-md-7">
                         <div class="footer-copy-right">
                             <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This
-                                template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-                                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->Copyright &copy;
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>
                         </div>

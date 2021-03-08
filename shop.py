@@ -52,6 +52,10 @@ def edititem_post(itemid):
         image.save(os.path.join(os.getcwd() + "/static/proizvodi", items.get('name')+'.png'))
     return redirect(url_for('market.shop_edit'))
 
+@market.route('/proizvod/<int:itemid>')
+def item_show(itemid):
+    item = Table('shop').item_by_id(itemid)
+    return render_template('proizvod.html', item = item)
 
 @market.route('/editshop')
 def shop_edit():

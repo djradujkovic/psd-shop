@@ -8,7 +8,7 @@ app.config['MYSQL_USER'] = 'djole'
 app.config['MYSQL_PASSWORD'] = 'nespa17er'
 app.config['MYSQL_DB'] = 'test'
 
-app.config['MY_SECRET'] = 'blabla'
+app.config['SECRET_KEY'] = 'blabla'
 
 mysql = MySQL(app)
 
@@ -17,6 +17,9 @@ app.register_blueprint(main)
 
 from shop import market
 app.register_blueprint(market)
+
+from auth import auth
+app.register_blueprint(auth)
 
 
 if __name__ == '__main__':
