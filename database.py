@@ -12,7 +12,10 @@ class Table:
         values = tuple(item.values())
         with Table.mysql.connection.cursor() as mycursor:
             mycursor.execute(f'INSERT INTO {self.name} ({keys}) VALUES {values}')
+            mycursor.execute(f'SELECT LAST_INSERT_ID()')
+            lastid = mycursor.fetchone()[0]
         Table.mysql.connection.commit()
+        return lastid
 
     def load_items(self):
         with Table.mysql.connection.cursor() as mycursor:

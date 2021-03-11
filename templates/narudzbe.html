@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block title %} Edit {% endblock %} {% block body %}
+
+<div class="container">
+    {% for narudzbe in na %}
+    <div class="item-border mb-10">
+        <h3>{{ narudzbe.kupac }}</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Proizvod</th>
+                        <th scope="col">Kolicina</th>
+                        <th scope="col">Cijena</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for narudzba in n if narudzba if narudzba.shopid == narudzbe.ID %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{shop.item_by_id(narudzba.itemid).name}}</td>
+                        <td>{{ narudzba.ammount }}</td>
+                        <td>{{shop.item_by_id(narudzba.itemid).price * narudzba.ammount}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3 class="d-flex justify-content-end">Ukupno: {{narudzbe.cijena}}</h3>
+            <div class="checkout_btn_inner float-right">
+                <a class="btn_1 checkout_btn_1" href="/posaljinarudzbu">Pošalji narudzbu</a>
+            </div>
+        </div>
+    </div>{% endfor %}
+</div>
+
+{% endblock %}

@@ -74,5 +74,29 @@ def korpa_show():
 def korpa_add(itemid):
     user = Table('users').item_by_id(session['ID'])
     korpe = Table('korpe')
-    korpe.add_item({'shopid': user.shopid, 'userid': user.ID, 'itemid': itemid, 'ammount': 1})
+    korpa = korpe.first({'shopid': user.shopid, 'itemid': itemid, 'userid': user.ID})
+    if korpa:
+        korpa.update({'ammount': korpa.ammount+1})
+    else:
+        korpe.add_item({'shopid': user.shopid, 'userid': user.ID, 'itemid': itemid, 'ammount': 1})
     return redirect(url_for('market.shop_show'))
+
+@market.route('/kupi')
+def korpa_buy():
+    user = Table('users').item_by_id(session['ID'])
+    korpe = Table('korpe').find_items({'shopid': user.shopid, 'userid': user.ID})
+    shop = Table('shop')
+    user.update({'shopid': user.shopid+1})
+    narudzbe = Table('narudzbe')
+    lastid = narudzbe.add_item({'kupac': user.name, 'cijena': sum(shop.item_by_id(i.itemid).price*i.ammount for i in korpe)})
+    for korpa in korpe:
+        Table('narudzba').add_item({'shopid': lastid, 'userid': user.ID, 'itemid': korpa.itemid, 'ammount': korpa.ammount})
+        korpa.remove()
+    return redirect(url_for('market.shop_show'))
+
+@market.route('/narudzbe')
+def narudzbe_shoW():
+    narudzbe = Table('narudzbe').load_items()
+    narudzba = Table('narudzba').load_items()
+    shop = Table('shop')
+    return render_template('narudzbe.html', na = narudzbe, n = narudzba, shop = shop)
